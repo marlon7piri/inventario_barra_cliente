@@ -23,7 +23,7 @@ const Home = () => {
 
     getProductos();
     setLoading(false);
-  }, []);
+  }, [productos]);
   return (
     <>
       <h1 className="text-red-500 text-4xl font-bold text-center mb-8">
