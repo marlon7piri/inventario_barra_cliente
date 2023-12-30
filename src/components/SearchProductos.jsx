@@ -15,7 +15,6 @@ const SearchProductos = ({ tablaProductos, setProductos }) => {
       }
     });
 
-    console.log(result);
     setProductos(result);
   };
 
