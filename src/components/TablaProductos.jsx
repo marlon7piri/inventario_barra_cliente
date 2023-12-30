@@ -34,7 +34,7 @@ const TablaProductos = ({productos,setProductos,loading}) => {
         <tr>
           <th scope="col">Producto</th>
           <th scope="col">Cantidad</th>
-          <th scope="col">Fecha de Creacion</th>
+          {/* <th scope="col">Fecha de Creacion</th> */}
           <th scope="col">Accion</th>
         </tr>
       </thead>
@@ -44,7 +44,7 @@ const TablaProductos = ({productos,setProductos,loading}) => {
             <tr key={e.id}>
               <td>{e.nombre}</td>
               <td>{e.cantidad}</td>
-              <td>{palindromo(e.createdAt.substring(0, 10))}</td>
+             {/*  <td>{palindromo(e.createdAt.substring(0, 10))}</td> */}
               <td className="flex gap-2">
                 <Link to={`/crear/${e.id}`} className="bg-sky-500 transition duration-500  hover:bg-sky-700 hover:text-slate-50   font-medium p-2 rounded-md w-max">
                   editar
