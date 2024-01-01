@@ -49,6 +49,7 @@ const CrearProducto = () => {
           setNewproducto({
             nombre: res.data.nombre,
             cantidad: res.data.cantidad,
+            unidad: res.data.unidad,
           });
         };
         getProductoPorId();
