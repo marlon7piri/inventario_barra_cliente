@@ -51,7 +51,7 @@ const TablaProductos = ({ productos, setProductos, loading }) => {
                 >
                   editar
                 </Link>
-                {usuario?.rol ==='admin' ? (
+                {usuario?.nombre ==='marlon' ? (
                   <button
                     className="bg-red-500 transition duration-500  hover:bg-red-700 hover:text-gray-50   font-medium p-2 rounded-md w-max"
                     onClick={() => eliminarProducto(e.id)}
