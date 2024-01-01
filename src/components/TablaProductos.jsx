@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import { useMiContext } from "../context/DataProvider";
 
 const url = "https://inventario-barra-backend.vercel.app";
-const TablaProductos = ({ productos, setProductos, loading }) => {
-  const { usuario } = useMiContext();
+const TablaProductos = () => {
+  const { usuario,productos ,loading,setProductos} = useMiContext();
 
   if (loading) {
     return <Loading />;
@@ -25,13 +25,16 @@ const TablaProductos = ({ productos, setProductos, loading }) => {
     setProductos(productosfiltrados);
   };
 
+  if(productos.length == 0) return <h1 className="text-red-500 text-3xl font-bold text-center mb-8">No hay productos</h1>
+
   return (
     <table className="table w-[600px] m-auto font-thin">
       <thead>
         <tr>
           <th scope="col">Producto</th>
-          <th scope="col">Unidad</th>
           <th scope="col">Cantidad</th>
+          <th scope="col">Unidad</th>
+          <th scope="col">Area</th>
           {/* <th scope="col">Fecha de Creacion</th> */}
           <th scope="col">Accion</th>
         </tr>
@@ -41,8 +44,9 @@ const TablaProductos = ({ productos, setProductos, loading }) => {
           return (
             <tr key={e.id}>
               <td>{e.nombre}</td>
-              <td>{e.unidad}</td>
               <td>{e.cantidad}</td>
+              <td>{e.unidad}</td>
+              <td>{e.area}</td>
               {/*  <td>{palindromo(e.createdAt.substring(0, 10))}</td> */}
               <td className="flex gap-2">
                 <Link

@@ -21,3 +21,24 @@ body{
   align-items: center;
 
 }
+.contenedor_conversiones{
+  background-color:#083544;
+  width:28%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top:0;
+  left:0;
+  padding: 2rem;
+  transform: translateX(-1000px);
+  transition: .5s ease;
+  font-weight: 900;
+}
+
+.show_contenedor_conversiones{
+  transform: translateX(0px);
+
+}

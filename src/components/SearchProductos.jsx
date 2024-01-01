@@ -2,23 +2,9 @@ import React, { useState } from "react";
 import { useMiContext } from "../context/DataProvider";
 
 const SearchProductos = ({ tablaProductos, setProductos }) => {
-  const [terminodebusqueda, setTerminodebusqueda] = useState("");
-  const { tipoinventario, setTipoinventario } = useMiContext();
+  const { tipoinventario, setTipoinventario,terminodebusqueda,setTerminodebusqueda ,filtrar} = useMiContext();
 
-  const filtrar = (terminodebusqueda) => {
-    const result = tablaProductos.filter((producto) => {
-      if (
-        producto.nombre
-          .toString()
-          .toLowerCase()
-          .includes(terminodebusqueda.toLowerCase())
-      ) {
-        return producto;
-      }
-    });
-
-    setProductos(result);
-  };
+ 
 
   const handlerChange = (e) => {
     setTerminodebusqueda(e.target.value);

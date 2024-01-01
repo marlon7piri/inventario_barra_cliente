@@ -2,14 +2,19 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useMiContext } from "../context/DataProvider";
 
 const url = "https://inventario-barra-backend.vercel.app/api/productos";
+const url2 = "http://localhost:3000/api/productos";
 
 const CrearProducto = () => {
+
+  const {setProductos,productos,getProductos} =useMiContext()
   const [newproducto, setNewproducto] = useState({
     nombre: "",
     cantidad: "",
     unidad: "KG",
+    area:"barra"
   });
   const [loading, setLoading] = useState(false);
   const params = useParams();
@@ -26,12 +31,14 @@ const CrearProducto = () => {
       cantidad: cantidadwithdecimal,
     });
 
+
     try {
       setLoading(true);
       const res = await axios.post(url, newproducto);
 
       if (res.status == 200) {
-        navigate("/");
+        setProductos([...productos,res.data])
+        navigate("/productos");
         setLoading(false);
         toast.success("producto creado");
       }
@@ -50,6 +57,7 @@ const CrearProducto = () => {
             nombre: res.data.nombre,
             cantidad: res.data.cantidad,
             unidad: res.data.unidad,
+            area: res.data.area,
           });
         };
         getProductoPorId();
@@ -65,12 +73,12 @@ const CrearProducto = () => {
     try {
       setLoading(true);
       const res = await axios.put(`${url}/${params.id}`, newproducto);
-
       if (res.status == 200) {
+        getProductos()
         toast.success("producto actualizado");
         setLoading(false);
-        setNewproducto({ nombre: "", cantidad: "" });
-        navigate("/");
+        setNewproducto({ nombre: "", cantidad: "",unidad:"",area:"" });
+        navigate("/productos");
       }
     } catch (error) {
       console.log(error);
@@ -81,7 +89,7 @@ const CrearProducto = () => {
   return (
     <div className="flex flex-col justify-center items-center w-full">
       <Link
-        to="/"
+        to="/productos"
         className="mt-14 w-max text-slate-50 hover:text-slate-50 bg-green-500 p-2  rounded-md hover:bg-green-800 transition duration-500"
       >
         Regresar
@@ -125,6 +133,19 @@ const CrearProducto = () => {
           <option value="LT">LT</option>
           <option value="PQTE">PQTE</option>
           <option value="UNID">UNID</option>
+        </select>
+        <select
+          name=""
+          id=""
+          value={newproducto.area}
+          onChange={(e) =>
+            setNewproducto({ ...newproducto, area: e.target.value })
+          }
+          className="p-2 outline-none cursor-pointer"
+        >
+          <option value="barra">barra</option>
+          <option value="cocina">cocina</option>
+          
         </select>
 
         <input
