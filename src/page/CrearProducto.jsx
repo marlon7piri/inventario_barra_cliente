@@ -3,12 +3,13 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
-const url = "https://inventario-barra-backend.vercel.app/api/productos"
+const url = "https://inventario-barra-backend.vercel.app/api/productos";
 
 const CrearProducto = () => {
   const [newproducto, setNewproducto] = useState({
     nombre: "",
-    cantidad: null,
+    cantidad: "",
+    unidad: "kg",
   });
   const [loading, setLoading] = useState(false);
   const params = useParams();
@@ -17,6 +18,15 @@ const CrearProducto = () => {
 
   const handlerSubmit = async (e) => {
     e.preventDefault();
+
+    const cantidadwithdecimal = Number(newproducto.cantidad);
+
+    setNewproducto({
+      ...newproducto,
+      cantidad: cantidadwithdecimal,
+    });
+
+    console.log(newproducto)
     try {
       setLoading(true);
       const res = await axios.post(url, newproducto);
@@ -61,7 +71,7 @@ const CrearProducto = () => {
         toast.success("producto actualizado");
         setLoading(false);
         setNewproducto({ nombre: "", cantidad: "" });
-        navigate('/')
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
@@ -94,7 +104,8 @@ const CrearProducto = () => {
           className="p-2 outline-none"
         />
         <input
-          type="number"
+          type="text"
+          pattern="^\d+(\.\d+)?$"
           value={newproducto.cantidad}
           onChange={(e) =>
             setNewproducto({ ...newproducto, cantidad: e.target.value })
@@ -102,6 +113,20 @@ const CrearProducto = () => {
           placeholder="cantidad del producto.."
           className="p-2 outline-none"
         />
+        <select
+          name=""
+          id=""
+          value={newproducto.unidad}
+          onChange={(e) =>
+            setNewproducto({ ...newproducto, unidad: e.target.value })
+          }
+          className="p-2 outline-none cursor-pointer"
+        >
+          <option value="kg">kg</option>
+          <option value="lb">lb</option>
+          <option value="paquete">paquete</option>
+        </select>
+
         <input
           type="submit"
           value={!loading ? (params.id ? "editar" : "crear") : "loading..."}

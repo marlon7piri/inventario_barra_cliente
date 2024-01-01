@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Loading from "./Loading";
 import axios from "axios";
-import {toast} from 'react-hot-toast'
-import {Link} from 'react-router-dom'
+import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
+import { useMiContext } from "../context/DataProvider";
 
-
-
-const url = "https://inventario-barra-backend.vercel.app"
-const TablaProductos = ({productos,setProductos,loading}) => {
-
- 
+const url = "https://inventario-barra-backend.vercel.app";
+const TablaProductos = ({ productos, setProductos, loading }) => {
+  const { usuario } = useMiContext();
 
   if (loading) {
     return <Loading />;
@@ -22,9 +20,8 @@ const TablaProductos = ({productos,setProductos,loading}) => {
   const eliminarProducto = async (id) => {
     const res = await axios.delete(`${url}/api/productos/${id}`);
 
-    
     const productosfiltrados = productos.filter((e) => e.id !== res.data.id);
-    toast.success('producto eliminado')
+    toast.success("producto eliminado");
     setProductos(productosfiltrados);
   };
 
@@ -33,6 +30,7 @@ const TablaProductos = ({productos,setProductos,loading}) => {
       <thead>
         <tr>
           <th scope="col">Producto</th>
+          <th scope="col">Unidad</th>
           <th scope="col">Cantidad</th>
           {/* <th scope="col">Fecha de Creacion</th> */}
           <th scope="col">Accion</th>
@@ -43,18 +41,26 @@ const TablaProductos = ({productos,setProductos,loading}) => {
           return (
             <tr key={e.id}>
               <td>{e.nombre}</td>
+              <td>{e.unidad}</td>
               <td>{e.cantidad}</td>
-             {/*  <td>{palindromo(e.createdAt.substring(0, 10))}</td> */}
+              {/*  <td>{palindromo(e.createdAt.substring(0, 10))}</td> */}
               <td className="flex gap-2">
-                <Link to={`/crear/${e.id}`} className="bg-sky-500 transition duration-500  hover:bg-sky-700 hover:text-slate-50   font-medium p-2 rounded-md w-max">
+                <Link
+                  to={`/crear/${e.id}`}
+                  className="bg-sky-500 transition duration-500  hover:bg-sky-700 hover:text-slate-50   font-medium p-2 rounded-md w-max"
+                >
                   editar
                 </Link>
-                <button
-                  className="bg-red-500 transition duration-500  hover:bg-red-700 hover:text-gray-50   font-medium p-2 rounded-md w-max"
-                  onClick={() => eliminarProducto(e.id)}
-                >
-                  eliminar
-                </button>
+                {usuario?.rol ==='admin' ? (
+                  <button
+                    className="bg-red-500 transition duration-500  hover:bg-red-700 hover:text-gray-50   font-medium p-2 rounded-md w-max"
+                    onClick={() => eliminarProducto(e.id)}
+                  >
+                    eliminar
+                  </button>
+                ) : (
+                  ""
+                )}
               </td>
             </tr>
           );
