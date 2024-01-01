@@ -26,11 +26,9 @@ const CrearProducto = () => {
       cantidad: cantidadwithdecimal,
     });
 
-    console.log(newproducto)
     try {
       setLoading(true);
       const res = await axios.post(url, newproducto);
-      console.log(res);
 
       if (res.status == 200) {
         navigate("/");
@@ -122,9 +120,10 @@ const CrearProducto = () => {
           }
           className="p-2 outline-none cursor-pointer"
         >
-          <option value="kg">kg</option>
-          <option value="lb">lb</option>
-          <option value="paquete">paquete</option>
+          <option value="KG">KG</option>
+          <option value="LT">LT</option>
+          <option value="PQTE">PQTE</option>
+          <option value="UNID">UNID</option>
         </select>
 
         <input
