@@ -22,7 +22,7 @@ export const DataProvider = ({ children }) => {
   const getProductos = async () => {
     setLoading(true);
     if (tipoinventario == "barra") {
-      await axios.get(url2).then((response) => {
+      await axios.get(url).then((response) => {
         setProductos(response.data);
         setTablaProductos(response.data);
       });
