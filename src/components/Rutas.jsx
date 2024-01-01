@@ -7,11 +7,11 @@ import Login from "../page/Login";
 export default function Rutas() {
   return (
     <Routes>
-      <Route  exact path="/" element={<Home />} />
+      <Route  exact path="/productos" element={<Home />} />
      
       <Route exact path="/crear/:id" element={<CrearProducto/>} />
       <Route exact path="/crear" element={<CrearProducto/>} />
-      <Route exact path="/login" element={<Login/>} />
+      <Route exact path="/" element={<Login/>} />
     </Routes>
   );
 }

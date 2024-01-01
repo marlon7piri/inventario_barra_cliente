@@ -17,7 +17,7 @@ const LimpiarCampos =()=>{
     e.preventDefault();
 
     if (usuario.nombre === "marlon" && usuario.password === "12345") {
-      navigate("/");
+      navigate("/productos");
      /*  LimpiarCampos() */
     } else {
       alert("No estas registrado");

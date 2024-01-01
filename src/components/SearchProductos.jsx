@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useMiContext } from "../context/DataProvider";
 
 const SearchProductos = ({ tablaProductos, setProductos }) => {
   const [terminodebusqueda, setTerminodebusqueda] = useState("");
+  const { tipoinventario, setTipoinventario } = useMiContext();
 
   const filtrar = (terminodebusqueda) => {
     const result = tablaProductos.filter((producto) => {
@@ -23,12 +25,24 @@ const SearchProductos = ({ tablaProductos, setProductos }) => {
     filtrar(e.target.value);
   };
   return (
-    <input
-      type="text"
-      placeholder="buscar producto....."
-      className="w-max p-2 outline-none"
-      onChange={handlerChange}
-    />
+    <form className="flex gap-2">
+      <input
+        type="text"
+        placeholder="buscar producto....."
+        className="w-max p-2 outline-none"
+        onChange={handlerChange}
+      />
+      <select
+        name=""
+        id=""
+        value={tipoinventario}
+        onChange={(e) => setTipoinventario(e.target.value)}
+        className="p-2 outline-none cursor-pointer"
+      >
+        <option value="barra">barra</option>
+        <option value="cocina">cocina</option>
+      </select>
+    </form>
   );
 };
 

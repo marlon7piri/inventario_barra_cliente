@@ -9,10 +9,11 @@ export const DataProvider = ({ children }) => {
         password:"",
         rol:"admin"
     })
+    const [tipoinventario, setTipoinventario] = useState("barra")
 
 
   return (
-    <DataContext.Provider value={{ usuario, setUsuario }}>
+    <DataContext.Provider value={{ usuario, setUsuario,tipoinventario,setTipoinventario }}>
       {children}
     </DataContext.Provider>
   );

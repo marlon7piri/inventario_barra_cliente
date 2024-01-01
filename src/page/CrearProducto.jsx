@@ -9,7 +9,7 @@ const CrearProducto = () => {
   const [newproducto, setNewproducto] = useState({
     nombre: "",
     cantidad: "",
-    unidad: "kg",
+    unidad: "KG",
   });
   const [loading, setLoading] = useState(false);
   const params = useParams();
