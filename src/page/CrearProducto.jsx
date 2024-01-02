@@ -20,7 +20,6 @@ const CrearProducto = () => {
   const params = useParams();
 
 
-  console.log(proveedores)
   const navigate = useNavigate();
 
   const handlerSubmit = async (e) => {
