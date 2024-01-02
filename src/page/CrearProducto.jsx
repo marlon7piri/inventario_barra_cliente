@@ -156,7 +156,7 @@ const CrearProducto = () => {
           }
           className="p-2 outline-none cursor-pointer"
         >{proveedores?.map((e)=>{
-          return  <option value={e}>{e.nombre}</option>
+          return  <option value={e.nombre}>{e.nombre}</option>
           
         })}
         </select>
