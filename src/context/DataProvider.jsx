@@ -5,6 +5,7 @@ export const DataContext = createContext();
 const url = "https://inventario-barra-backend.vercel.app/api/productos";
 const urlProveedores =
   "https://inventario-barra-backend.vercel.app/api/proveedores";
+  const urlProveedores2 = "http://localhost:3000/api/proveedores";
 const url2 = "http://localhost:3000/api/productos";
 
 export const DataProvider = ({ children }) => {
@@ -40,7 +41,6 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     getData();
   }, []);
-
   const filtrar = (terminodebusqueda) => {
     const result = tablaProductos.filter((producto) => {
       if (

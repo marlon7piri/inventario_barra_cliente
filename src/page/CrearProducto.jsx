@@ -8,17 +8,16 @@ const url = "https://inventario-barra-backend.vercel.app/api/productos";
 const url2 = "http://localhost:3000/api/productos";
 
 const CrearProducto = () => {
-  const { setProductos, productos, getData,proveedores } = useMiContext();
+  const { setProductos, productos, getData, proveedores } = useMiContext();
   const [newproducto, setNewproducto] = useState({
     nombre: "",
     cantidad: "",
     unidad: "KG",
     area: "barra",
-    proveedor:""
+    proveedor: "",
   });
   const [loading, setLoading] = useState(false);
   const params = useParams();
-
 
   const navigate = useNavigate();
 
@@ -34,8 +33,7 @@ const CrearProducto = () => {
 
     try {
       setLoading(true);
-      const res = await axios.post(url, newproducto);
-
+      const res = await axios.post(url2, newproducto);
       if (res.status == 200) {
         setProductos([...productos, res.data]);
         navigate("/productos");
@@ -78,7 +76,13 @@ const CrearProducto = () => {
         getData();
         toast.success("producto actualizado");
         setLoading(false);
-        setNewproducto({ nombre: "", cantidad: "", unidad: "", area: "",proveedor:"" });
+        setNewproducto({
+          nombre: "",
+          cantidad: "",
+          unidad: "",
+          area: "",
+          proveedor: "",
+        });
         navigate("/productos");
       }
     } catch (error) {
@@ -147,21 +151,21 @@ const CrearProducto = () => {
           <option value="barra">barra</option>
           <option value="cocina">cocina</option>
         </select>
+        <label htmlFor="">Proveedor</label>
         <select
           name=""
           id=""
-          value={newproducto.proveedor}
+          value={newproducto.proveedor} 
           onChange={(e) =>
             setNewproducto({ ...newproducto, proveedor: e.target.value })
           }
           className="p-2 outline-none cursor-pointer"
-        >{proveedores?.map((e)=>{
-          return  <option value={e.nombre}>{e.nombre}</option>
-          
-        })}
+        >
+          <option value=""> </option>
+          {proveedores?.map((e) => {
+            return <option value={e.nombre}>{e.nombre}</option>;
+          })}
         </select>
-
-
 
         <input
           type="submit"
