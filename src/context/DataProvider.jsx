@@ -3,6 +3,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 export const DataContext = createContext();
 const url = "https://inventario-barra-backend.vercel.app/api/productos";
+const urlProveedores =
+  "https://inventario-barra-backend.vercel.app/api/proveedores";
 const url2 = "http://localhost:3000/api/productos";
 
 export const DataProvider = ({ children }) => {
@@ -11,38 +13,38 @@ export const DataProvider = ({ children }) => {
     password: "",
     rol: "admin",
   });
-  const [tipoinventario, setTipoinventario] = useState("barra");
+  const [tipoinventario, setTipoinventario] = useState("todos");
   const [terminodebusqueda, setTerminodebusqueda] = useState("");
+  const [proveedores, setProveedores] = useState([]);
 
   const [productos, setProductos] = useState([]);
   const [tablaProductos, setTablaProductos] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [resultadoconversion, setResultadoconversion] = useState(0)
+  const [resultadoconversion, setResultadoconversion] = useState(0);
 
-  const getProductos = async () => {
+  const getData = async () => {
     setLoading(true);
-    if (tipoinventario) {
-      await axios.get(url).then((response) => {
-        setProductos(response.data);
-        setTablaProductos(response.data);
-      });
-    } else {
-      alert("obteniendo datos de cocina");
-      return;
-    }
+
+    await axios.get(url).then((response) => {
+      setProductos(response.data);
+      setTablaProductos(response.data);
+    });
+
+    await axios.get(urlProveedores).then((response) => {
+      setProveedores(response.data);
+    });
+
     setLoading(false);
   };
 
   useEffect(() => {
-   
-
-    getProductos();
-    
+    getData();
   }, []);
 
   const filtrar = (terminodebusqueda) => {
     const result = tablaProductos.filter((producto) => {
       if (
+        producto.area == tipoinventario &&
         producto.nombre
           .toString()
           .toLowerCase()
@@ -55,13 +57,26 @@ export const DataProvider = ({ children }) => {
     setProductos(result);
   };
 
-  const openConversion =()=>{
-    document.querySelector('.contenedor_conversiones').classList.toggle('show_contenedor_conversiones')
-  }
+  const filtrarPorArea = (tipoinventario) => {
+    const result = tablaProductos.filter((producto) => {
+      return producto.area === tipoinventario;
+    });
 
-  const closeConversion =()=>{
-    document.querySelector('.contenedor_conversiones').classList.remove('show_contenedor_conversiones')
-  }
+    setProductos(result);
+  };
+
+  const openConversion = () => {
+    document
+      .querySelector(".contenedor_conversiones")
+      .classList.toggle("show_contenedor_conversiones");
+  };
+
+  const closeConversion = () => {
+    document
+      .querySelector(".contenedor_conversiones")
+      .classList.remove("show_contenedor_conversiones");
+  };
+
 
 
   return (
@@ -69,6 +84,8 @@ export const DataProvider = ({ children }) => {
       value={{
         productos,
         setProductos,
+        proveedores,
+        setProveedores,
         loading,
         tablaProductos,
         setTablaProductos,
@@ -79,7 +96,13 @@ export const DataProvider = ({ children }) => {
         setTipoinventario,
         terminodebusqueda,
         setTerminodebusqueda,
-        filtrar,getProductos,openConversion,closeConversion,resultadoconversion,setResultadoconversion
+        filtrar,
+        getData,
+        openConversion,
+        closeConversion,
+        resultadoconversion,
+        setResultadoconversion,
+        filtrarPorArea,
       }}
     >
       {children}

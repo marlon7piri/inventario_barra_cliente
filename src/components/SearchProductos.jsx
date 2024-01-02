@@ -1,14 +1,23 @@
 import React, { useState } from "react";
 import { useMiContext } from "../context/DataProvider";
 
-const SearchProductos = ({ tablaProductos, setProductos }) => {
-  const { tipoinventario, setTipoinventario,terminodebusqueda,setTerminodebusqueda ,filtrar} = useMiContext();
-
- 
+const SearchProductos = () => {
+  const {
+    tipoinventario,
+    setTipoinventario,
+    filtrarPorArea,
+    setTerminodebusqueda,
+    filtrar,
+  } = useMiContext();
 
   const handlerChange = (e) => {
     setTerminodebusqueda(e.target.value);
     filtrar(e.target.value);
+  };
+
+  const manejarFiltradoPorArea = (e) => {
+    setTipoinventario(e.target.value);
+    filtrarPorArea(e.target.value);
   };
   return (
     <form className="flex gap-2">
@@ -22,11 +31,13 @@ const SearchProductos = ({ tablaProductos, setProductos }) => {
         name=""
         id=""
         value={tipoinventario}
-        onChange={(e) => setTipoinventario(e.target.value)}
+        onChange={manejarFiltradoPorArea}
         className="p-2 outline-none cursor-pointer"
       >
+        <option value="">todos</option>
         <option value="barra">barra</option>
         <option value="cocina">cocina</option>
+        {/*  <option value="todos">todos</option> */}
       </select>
     </form>
   );

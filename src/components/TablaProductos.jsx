@@ -4,6 +4,8 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { useMiContext } from "../context/DataProvider";
+import { VscEdit } from "react-icons/vsc";
+import { MdDeleteForever } from "react-icons/md";
 
 const url = "https://inventario-barra-backend.vercel.app";
 const TablaProductos = () => {
@@ -34,7 +36,7 @@ const TablaProductos = () => {
           <th scope="col">Producto</th>
           <th scope="col">Cantidad</th>
           <th scope="col">Unidad</th>
-          <th scope="col">Area</th>
+          <th scope="col">Proveedor</th>
           {/* <th scope="col">Fecha de Creacion</th> */}
           <th scope="col">Accion</th>
         </tr>
@@ -42,25 +44,25 @@ const TablaProductos = () => {
       <tbody>
         {productos?.map((e) => {
           return (
-            <tr key={e.id}>
+            <tr key={e.id} >
               <td>{e.nombre}</td>
               <td>{e.cantidad}</td>
               <td>{e.unidad}</td>
-              <td>{e.area}</td>
+              <td>{e.proveedor}</td>
               {/*  <td>{palindromo(e.createdAt.substring(0, 10))}</td> */}
               <td className="flex gap-2">
                 <Link
                   to={`/crear/${e.id}`}
                   className="bg-sky-500 transition duration-500  hover:bg-sky-700 hover:text-slate-50   font-medium p-2 rounded-md w-max"
                 >
-                  editar
+                 <VscEdit  className="text-slate-50"/>
                 </Link>
                 {usuario?.nombre ==='marlon' ? (
                   <button
                     className="bg-red-500 transition duration-500  hover:bg-red-700 hover:text-gray-50   font-medium p-2 rounded-md w-max"
                     onClick={() => eliminarProducto(e.id)}
                   >
-                    eliminar
+                   <MdDeleteForever className="text-slate-50"/>
                   </button>
                 ) : (
                   ""

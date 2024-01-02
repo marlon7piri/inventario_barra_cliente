@@ -8,17 +8,19 @@ const url = "https://inventario-barra-backend.vercel.app/api/productos";
 const url2 = "http://localhost:3000/api/productos";
 
 const CrearProducto = () => {
-
-  const {setProductos,productos,getProductos} =useMiContext()
+  const { setProductos, productos, getData,proveedores } = useMiContext();
   const [newproducto, setNewproducto] = useState({
     nombre: "",
     cantidad: "",
     unidad: "KG",
-    area:"barra"
+    area: "barra",
+    proveedor:""
   });
   const [loading, setLoading] = useState(false);
   const params = useParams();
 
+
+  console.log(proveedores)
   const navigate = useNavigate();
 
   const handlerSubmit = async (e) => {
@@ -31,13 +33,12 @@ const CrearProducto = () => {
       cantidad: cantidadwithdecimal,
     });
 
-
     try {
       setLoading(true);
       const res = await axios.post(url, newproducto);
 
       if (res.status == 200) {
-        setProductos([...productos,res.data])
+        setProductos([...productos, res.data]);
         navigate("/productos");
         setLoading(false);
         toast.success("producto creado");
@@ -58,6 +59,7 @@ const CrearProducto = () => {
             cantidad: res.data.cantidad,
             unidad: res.data.unidad,
             area: res.data.area,
+            proveedor: res.data.proveedor,
           });
         };
         getProductoPorId();
@@ -74,10 +76,10 @@ const CrearProducto = () => {
       setLoading(true);
       const res = await axios.put(`${url}/${params.id}`, newproducto);
       if (res.status == 200) {
-        getProductos()
+        getData();
         toast.success("producto actualizado");
         setLoading(false);
-        setNewproducto({ nombre: "", cantidad: "",unidad:"",area:"" });
+        setNewproducto({ nombre: "", cantidad: "", unidad: "", area: "",proveedor:"" });
         navigate("/productos");
       }
     } catch (error) {
@@ -90,7 +92,7 @@ const CrearProducto = () => {
     <div className="flex flex-col justify-center items-center w-full">
       <Link
         to="/productos"
-        className="mt-14 w-max text-slate-50 hover:text-slate-50 bg-green-500 p-2  rounded-md hover:bg-green-800 transition duration-500"
+        className="mt-14 mb-8 w-max text-slate-50 hover:text-slate-50 bg-green-500 p-2  rounded-md hover:bg-green-800 transition duration-500"
       >
         Regresar
       </Link>
@@ -145,8 +147,22 @@ const CrearProducto = () => {
         >
           <option value="barra">barra</option>
           <option value="cocina">cocina</option>
-          
         </select>
+        <select
+          name=""
+          id=""
+          value={newproducto.proveedor}
+          onChange={(e) =>
+            setNewproducto({ ...newproducto, proveedor: e.target.value })
+          }
+          className="p-2 outline-none cursor-pointer"
+        >{proveedores?.map((e)=>{
+          return  <option value={e}>{e.nombre}</option>
+          
+        })}
+        </select>
+
+
 
         <input
           type="submit"
