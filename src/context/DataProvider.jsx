@@ -10,11 +10,11 @@ const url2 = "http://localhost:3000/api/productos";
 
 export const DataProvider = ({ children }) => {
   const [usuario, setUsuario] = useState({
-    nombre: "marlon",
+    nombre: "",
     password: "",
     rol: "admin",
   });
-  const [tipoinventario, setTipoinventario] = useState("todos");
+  const [tipoinventario, setTipoinventario] = useState("barra");
   const [terminodebusqueda, setTerminodebusqueda] = useState("");
   const [proveedores, setProveedores] = useState([]);
 

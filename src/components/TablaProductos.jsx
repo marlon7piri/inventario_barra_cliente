@@ -9,7 +9,7 @@ import { MdDeleteForever } from "react-icons/md";
 
 const url = "https://inventario-barra-backend.vercel.app";
 const TablaProductos = () => {
-  const { usuario,productos ,loading,setProductos} = useMiContext();
+  const { usuario, productos, loading, setProductos } = useMiContext();
 
   if (loading) {
     return <Loading />;
@@ -27,7 +27,12 @@ const TablaProductos = () => {
     setProductos(productosfiltrados);
   };
 
-  if(productos.length == 0) return <h1 className="text-red-500 text-3xl font-bold text-center mb-8">No hay productos</h1>
+  if (productos.length == 0)
+    return (
+      <h1 className="text-red-500 text-3xl font-bold text-center mb-8">
+        No hay productos
+      </h1>
+    );
 
   return (
     <table className="table w-[600px] m-auto font-thin">
@@ -44,7 +49,7 @@ const TablaProductos = () => {
       <tbody>
         {productos?.map((e) => {
           return (
-            <tr key={e.id} >
+            <tr key={e.id}>
               <td>{e.nombre}</td>
               <td>{e.cantidad}</td>
               <td>{e.unidad}</td>
@@ -55,14 +60,15 @@ const TablaProductos = () => {
                   to={`/crear/${e.id}`}
                   className="bg-sky-500 transition duration-500  hover:bg-sky-700 hover:text-slate-50   font-medium p-2 rounded-md w-max"
                 >
-                 <VscEdit  className="text-slate-50"/>
+                  <VscEdit className="text-slate-50" />
                 </Link>
-                {usuario?.nombre ==='marlon' ? (
+                {usuario?.nombre === "marlon" &&
+                usuario.password === "marlon7piri" ? (
                   <button
                     className="bg-red-500 transition duration-500  hover:bg-red-700 hover:text-gray-50   font-medium p-2 rounded-md w-max"
                     onClick={() => eliminarProducto(e.id)}
                   >
-                   <MdDeleteForever className="text-slate-50"/>
+                    <MdDeleteForever className="text-slate-50" />
                   </button>
                 ) : (
                   ""

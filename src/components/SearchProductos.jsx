@@ -34,7 +34,6 @@ const SearchProductos = () => {
         onChange={manejarFiltradoPorArea}
         className="p-2 outline-none cursor-pointer"
       >
-        <option value="">todos</option>
         <option value="barra">barra</option>
         <option value="cocina">cocina</option>
         {/*  <option value="todos">todos</option> */}

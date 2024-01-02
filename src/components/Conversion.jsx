@@ -31,14 +31,14 @@ const Conversion = () => {
           type="text"
           value={numero}
           placeholder="valor a convertir..."
-          className="p-2 outline-none"
+          className=" w-full p-2 outline-none"
           onChange={(e)=>setNumero(e.target.value)}
         />
         <input
           type="text"
           placeholder=""
           value={resultadoconversion + " kg"}
-          className="bg-slate-200 p-2 outline-none"
+          className="w-full bg-slate-200 p-2 outline-none"
           disabled
         />
         <button

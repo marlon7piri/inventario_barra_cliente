@@ -16,7 +16,7 @@ const LimpiarCampos =()=>{
   const handlerSubmit = (e) => {
     e.preventDefault();
 
-    if (usuario.nombre === "marlon" && usuario.password === "12345") {
+    if (usuario.nombre !== "" && usuario.password !== "") {
       navigate("/productos");
      /*  LimpiarCampos() */
     } else {
@@ -41,7 +41,7 @@ const LimpiarCampos =()=>{
           placeholder="usuario"
           onChange={(e) => setUsuario({...usuario,nombre:e.target.value})}
           className="p-2 outline-none"
-          value={usuario.nombre}
+          value={usuario.nombre} autoComplete="false"
         />
         <input
           type="password"

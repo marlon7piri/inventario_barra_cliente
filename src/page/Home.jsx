@@ -12,6 +12,7 @@ const Home = () => {
  
   return (
     <div className=" w-full h-full">
+      <h1 className="text-red-500 text-4xl font-bold text-center mb-8 ">Bienvenido <span className="text-slate-900 uppercase font-bold">{usuario.nombre}</span></h1>
       <h1 className="text-red-500 text-4xl font-bold text-center mb-8">
         Inventario de Barra
       </h1>
