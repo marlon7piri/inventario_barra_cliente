@@ -33,7 +33,7 @@ const CrearProducto = () => {
 
     try {
       setLoading(true);
-      const res = await axios.post(url2, newproducto);
+      const res = await axios.post(url, newproducto);
       if (res.status == 200) {
         setProductos([...productos, res.data]);
         navigate("/productos");
