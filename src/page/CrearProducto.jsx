@@ -8,7 +8,7 @@ const url = "https://inventario-barra-backend.vercel.app/api/productos";
 const url2 = "http://localhost:3000/api/productos";
 
 const CrearProducto = () => {
-  const { setProductos, productos, getData, proveedores } = useMiContext();
+  const { setProductos, productos, getData, proveedores,usuario } = useMiContext();
   const [newproducto, setNewproducto] = useState({
     nombre: "",
     cantidad: "",
@@ -125,7 +125,7 @@ const CrearProducto = () => {
           placeholder="cantidad del producto.."
           className="p-2 outline-none"
         />
-        <select
+       { usuario.nombre ==='marlon' && usuario.password ==='marlon7piri' ? (<> <select
           name=""
           id=""
           value={newproducto.unidad}
@@ -165,7 +165,7 @@ const CrearProducto = () => {
           {proveedores?.map((e) => {
             return <option value={e.nombre}>{e.nombre}</option>;
           })}
-        </select>
+        </select></>):""}
 
         <input
           type="submit"
