@@ -2,19 +2,30 @@ import React, { useEffect, useState } from "react";
 import Loading from "./Loading";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useMiContext } from "../context/DataProvider";
 import { VscEdit } from "react-icons/vsc";
 import { MdDeleteForever } from "react-icons/md";
 
 const url = "https://inventario-barra-backend.vercel.app";
 const TablaProductos = () => {
-  const { usuario, productos, loading, setProductos } = useMiContext();
+  const { usuario, loading, setProductos,productos,tablaProductos } = useMiContext();
 
+  const params = useParams()
+  const filtrarPorArea = (area) => {
+    const result = tablaProductos.filter((producto) => {
+      return producto.area === area;
+    });
+
+    setProductos(result);
+  };
+
+  useEffect(()=>{
+    filtrarPorArea(params.area)
+  },[loading])
   if (loading) {
     return <Loading />;
   }
-
   const palindromo = (fecha) => {
     return fecha.split("-").reverse().join("-");
   };

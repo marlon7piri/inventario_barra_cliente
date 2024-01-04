@@ -8,7 +8,7 @@ const url = "https://inventario-barra-backend.vercel.app/api/productos";
 const url2 = "http://localhost:3000/api/productos";
 
 const CrearProducto = () => {
-  const { setProductos, productos, getData, proveedores,usuario } = useMiContext();
+  const { cambiodepath,setCambiodepath,setProductos, productos, getData, proveedores,usuario,tablaProductos } = useMiContext();
   const [newproducto, setNewproducto] = useState({
     nombre: "",
     cantidad: "",
@@ -19,6 +19,13 @@ const CrearProducto = () => {
   const [loading, setLoading] = useState(false);
   const params = useParams();
 
+  const filtrarPorArea = (area) => {
+    const result = tablaProductos.filter((producto) => {
+      return producto.area === area;
+    });
+
+    setProductos(result);
+  };
   const navigate = useNavigate();
 
   const handlerSubmit = async (e) => {
@@ -73,9 +80,14 @@ const CrearProducto = () => {
       setLoading(true);
       const res = await axios.put(`${url}/${params.id}`, newproducto);
       if (res.status == 200) {
-        getData();
+        getData(); 
         toast.success("producto actualizado");
         setLoading(false);
+        setCambiodepath(!cambiodepath)
+        navigate(`/productos/${newproducto.area}`);
+        /* navigate(`/home`); */
+
+
         setNewproducto({
           nombre: "",
           cantidad: "",
@@ -83,18 +95,19 @@ const CrearProducto = () => {
           area: "",
           proveedor: "",
         });
-        navigate("/productos");
       }
     } catch (error) {
       console.log(error);
     }
     setLoading(false);
+    filtrarPorArea(params.area)
+
   };
 
   return (
     <div className="flex flex-col justify-center items-center w-full">
       <Link
-        to="/productos"
+        to={`/productos/${newproducto.area}`}
         className="mt-14 mb-8 w-max text-slate-50 hover:text-slate-50 bg-green-500 p-2  rounded-md hover:bg-green-800 transition duration-500"
       >
         Regresar

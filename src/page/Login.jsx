@@ -17,7 +17,7 @@ const LimpiarCampos =()=>{
     e.preventDefault();
 
     if (usuario.nombre !== "" && usuario.password !== "") {
-      navigate("/productos");
+      navigate("/home");
      /*  LimpiarCampos() */
     } else {
       alert("No estas registrado");
@@ -27,7 +27,7 @@ const LimpiarCampos =()=>{
 
   };
   return (
-    <div>
+    <div className="w-1/4 m-auto">
       <h1 className="text-red-500 text-3xl font-bold text-center mb-8">
         Login
       </h1>

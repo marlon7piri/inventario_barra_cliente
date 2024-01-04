@@ -1,11 +1,12 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 export const DataContext = createContext();
 const url = "https://inventario-barra-backend.vercel.app/api/productos";
 const urlProveedores =
   "https://inventario-barra-backend.vercel.app/api/proveedores";
-  const urlProveedores2 = "http://localhost:3000/api/proveedores";
+const urlProveedores2 = "http://localhost:3000/api/proveedores";
 const url2 = "http://localhost:3000/api/productos";
 
 export const DataProvider = ({ children }) => {
@@ -22,17 +23,23 @@ export const DataProvider = ({ children }) => {
   const [tablaProductos, setTablaProductos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [resultadoconversion, setResultadoconversion] = useState(0);
+  const [cambiodepath, setCambiodepath] = useState(false);
 
+  const params = useParams();
   const getData = async () => {
     setLoading(true);
 
     await axios.get(url).then((response) => {
       setProductos(response.data);
       setTablaProductos(response.data);
+
+      setLoading(false);
     });
 
     await axios.get(urlProveedores).then((response) => {
       setProveedores(response.data);
+
+      setLoading(false);
     });
 
     setLoading(false);
@@ -41,10 +48,12 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     getData();
   }, []);
+
+ 
+
   const filtrar = (terminodebusqueda) => {
     const result = tablaProductos.filter((producto) => {
       if (
-        producto.area == tipoinventario &&
         producto.nombre
           .toString()
           .toLowerCase()
@@ -52,17 +61,12 @@ export const DataProvider = ({ children }) => {
       ) {
         return producto;
       }
+
+    
+
     });
-
     setProductos(result);
-  };
 
-  const filtrarPorArea = (tipoinventario) => {
-    const result = tablaProductos.filter((producto) => {
-      return producto.area === tipoinventario;
-    });
-
-    setProductos(result);
   };
 
   const openConversion = () => {
@@ -76,8 +80,6 @@ export const DataProvider = ({ children }) => {
       .querySelector(".contenedor_conversiones")
       .classList.remove("show_contenedor_conversiones");
   };
-
-
 
   return (
     <DataContext.Provider
@@ -102,7 +104,8 @@ export const DataProvider = ({ children }) => {
         closeConversion,
         resultadoconversion,
         setResultadoconversion,
-        filtrarPorArea,
+        cambiodepath,
+        setCambiodepath,
       }}
     >
       {children}

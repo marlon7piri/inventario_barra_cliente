@@ -7,12 +7,13 @@ const SearchProductos = () => {
     setTipoinventario,
     filtrarPorArea,
     setTerminodebusqueda,
-    filtrar,
+    filtrar,setLoading,loading
   } = useMiContext();
 
   const handlerChange = (e) => {
     setTerminodebusqueda(e.target.value);
     filtrar(e.target.value);
+
   };
 
   const manejarFiltradoPorArea = (e) => {
@@ -20,14 +21,14 @@ const SearchProductos = () => {
     filtrarPorArea(e.target.value);
   };
   return (
-    <form className="flex gap-2">
+    <form className="flex gap-2 m-auto ">
       <input
         type="text"
         placeholder="buscar producto....."
-        className="w-max p-2 outline-none"
+        className="w-max p-2 outline-none mt-8"
         onChange={handlerChange}
       />
-      <select
+    {/*  { <select
         name=""
         id=""
         value={tipoinventario}
@@ -36,8 +37,7 @@ const SearchProductos = () => {
       >
         <option value="barra">barra</option>
         <option value="cocina">cocina</option>
-        {/*  <option value="todos">todos</option> */}
-      </select>
+      </select>} */}
     </form>
   );
 };
